@@ -25,6 +25,7 @@ import com.travelex.request.ConsumerRequest;
 import com.travelex.request.LoginRequest;
 import com.travelex.response.BaseResponse;
 import com.travelex.response.ConsumerResponse;
+import com.travelex.utils.TravelexUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,6 +54,7 @@ public class ConsumerController {
 		}
 		Consumer consumer = new Consumer();
 		BeanUtils.copyProperties(consumerRequest, consumer);
+		consumer.setPassword(TravelexUtils.encodeString(consumer.getPassword(),consumer.getPassword().length()));
 		consumer.setUserId(null);
 		consumer = consumerRepository.save(consumer);
 		LOGGER.info("Created Consumer Successfully ");
@@ -69,6 +71,7 @@ public class ConsumerController {
 			return new ResponseEntity<ConsumerResponse>(
 					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.USER_NOT_EXISTS), HttpStatus.BAD_REQUEST);
 		}
+		consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
 		List<Consumer> consumers = consumerRepository.findByEmailAndPassword(consumerRequest.getEmailId(),consumerRequest.getPassword());
 		if(CollectionUtils.isEmpty(consumers))
 		{
@@ -76,6 +79,7 @@ public class ConsumerController {
 					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_LOGIN), HttpStatus.BAD_REQUEST);
 		}
 		List<Card> cards = cardRepository.findByConsumer(consumers.get(0));
+		cards = TravelexUtils.getDecodedCards(cards);
 		
 		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumers.get(0), cards),HttpStatus.OK);
 	}

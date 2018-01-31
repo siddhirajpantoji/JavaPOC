@@ -26,7 +26,7 @@ public class ConsumerResponse extends BaseResponse {
 	
 	private String email;
 
-	private Long userId;
+	private Long consumerId;
 	
 	private List<Card> cards;
 
@@ -39,7 +39,7 @@ public class ConsumerResponse extends BaseResponse {
 		this.firstName =consumer.getFirstName();
 		this.lastName = consumer.getLastName();
 		this.email = consumer.getEmail();
-		this.userId = consumer.getUserId();
+		this.consumerId = consumer.getUserId();
 		this.cards = cards;
 	}
 

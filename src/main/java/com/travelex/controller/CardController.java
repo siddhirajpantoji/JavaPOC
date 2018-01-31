@@ -25,6 +25,7 @@ import com.travelex.repository.ConsumerRepository;
 import com.travelex.request.CardRequest;
 import com.travelex.response.BaseResponse;
 import com.travelex.response.ConsumerResponse;
+import com.travelex.utils.TravelexUtils;
 
 @RestController
 @RequestMapping(value=RESTEndPointMapper.CARD_DETAILS)
@@ -50,6 +51,7 @@ public class CardController {
 		}
 		
 		List<Card> cards = cardRepository.findByConsumer(consumer);
+		cards= TravelexUtils.getDecodedCards(cards);
 		
 		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards),HttpStatus.OK);
 	}
@@ -77,6 +79,7 @@ public class CardController {
 				consumerRequest.getCards().get(counter).setCardId(null);
 				Card card = new Card();
 				BeanUtils.copyProperties(consumerRequest.getCards().get(counter), card);
+				card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), card.getCardNumber().length()-4));
 				card.setConsumer(consumer);
 				cards.add(card);
 			}
@@ -110,6 +113,7 @@ public class CardController {
 					// To be decided for Validation 
 				}
 				BeanUtils.copyProperties(consumerRequest.getCards().get(counter), card);
+				card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), card.getCardNumber().length()-4));
 				cardRepository.save(card);
 			}
 		}

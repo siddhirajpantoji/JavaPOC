@@ -2,6 +2,10 @@ package com.travelex.exception;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -56,6 +60,21 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ValidationResponse>(new ValidationResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_REQUEST), HttpStatus.BAD_REQUEST);
 	}
 	
+	
+	@ExceptionHandler ( value = ConstraintViolationException.class)
+	public ResponseEntity<ValidationResponse> handleConstraintViolationException ( ConstraintViolationException exception)
+	{
+		Map<String,String> errorMap = null;
+		Set<ConstraintViolation<?>> violations= exception.getConstraintViolations();
+		errorMap= new HashMap<>();
+		for(ConstraintViolation<?> constraintViolation:violations)
+		{
+			errorMap.put(constraintViolation.getRootBeanClass().getName()+"."+constraintViolation.getPropertyPath(), constraintViolation.getMessage());
+		}
+		return new ResponseEntity<ValidationResponse>(new ValidationResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_REQUEST, errorMap), HttpStatus.BAD_REQUEST);
+	}
+	
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<BaseResponse> handleAllResponse(Exception exception)
 	{
@@ -69,6 +88,4 @@ public class GlobalExceptionHandler {
 		LOGGER.error("MissingServletRequestParameterException occured ",exception);
 		return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.BAD_REQUEST, exception.getMessage()),HttpStatus.BAD_REQUEST);
 	}
-	
-	
 }
