@@ -1,8 +1,10 @@
 package com.travelex.request;
 
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,4 +25,8 @@ public class CardRequestSingle {
 	private String expiryDate;
 	
 	private boolean isActive;
+	
+	@NotEmpty(message="Card Type cannot be null")
+	@ApiModelProperty(required=true)
+	private String cardType;
 }
