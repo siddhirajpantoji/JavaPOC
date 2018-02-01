@@ -112,6 +112,11 @@ public class CardController {
 							.INVALID_CARD_ID),HttpStatus.BAD_REQUEST);
 					// To be decided for Validation 
 				}
+				if( card.getConsumer().getUserId().longValue() != consumer.getUserId().longValue())
+				{
+					return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants
+							.INVALID_CARD_ID),HttpStatus.BAD_REQUEST);
+				}
 				BeanUtils.copyProperties(consumerRequest.getCards().get(counter), card);
 				card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), card.getCardNumber().length()-4));
 				cardRepository.save(card);
