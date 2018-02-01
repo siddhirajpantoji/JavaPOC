@@ -17,14 +17,14 @@ public class CucumberHooks {
 	public void beforeScenario() {
 		LOGGER.info("Starting setup ");
 		// Start Setup here
-		String[] args = { "" };
-		context = SpringApplication.run(TravelexTestApplication.class, args);
+//		String[] args = { "" };
+//		context = SpringApplication.run(TravelexTestApplication.class, args);
 	}
 
 	@After
 	public void afterScenario() {
 		LOGGER.info("Exiting from Setup ");
 		// End Setup here
-		SpringApplication.exit(context);
+//		SpringApplication.exit(context);
 	}
 }
