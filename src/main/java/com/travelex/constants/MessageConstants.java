@@ -24,6 +24,7 @@ public class MessageConstants {
 	
 	public static final String INVALID_CONSUMER_ID = "Invalid Consumer Id";
 	public static final String INVALID_CARD_ID = "Invalid Card Id";
+	public static final String CARD_EXISTS_FOR_CONSUMER = "Card Exists for this consumer ";
 	
 	public static final String UNAUTH_USER ="User is not authorised to use this API";
 }

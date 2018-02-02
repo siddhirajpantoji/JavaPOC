@@ -2,7 +2,6 @@ package com.travelex;
 
 
 import org.apache.log4j.Logger;
-import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
 import cucumber.api.java.After;

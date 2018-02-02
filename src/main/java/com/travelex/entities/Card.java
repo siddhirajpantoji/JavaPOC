@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -24,6 +26,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
+@Table( uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"card_number","consumer_id","card_type"})
+})
 @JsonIgnoreProperties(value = { "consumer" })
 public class Card {
 
@@ -34,6 +39,7 @@ public class Card {
 
 	@NotEmpty
 	@Size(max = 16, min = 16, message = "Card Number must be 16 digits ")
+	@Column(name="card_number")
 	private String cardNumber;
 
 	private String expiryDate;
