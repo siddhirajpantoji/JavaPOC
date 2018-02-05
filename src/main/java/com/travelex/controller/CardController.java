@@ -70,6 +70,7 @@ public class CardController {
 					new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_CONSUMER_ID),
 					HttpStatus.BAD_REQUEST);
 		}
+		
 		if (cardRepository.countByConsumerCardTypeAndCard(consumer.getUserId(), cardRequest.getCardType(), TravelexUtils
 				.encodeString(cardRequest.getCardNumber(), cardRequest.getCardNumber().length() - 4)) > 0) {
 			return new ResponseEntity<BaseResponse>(
