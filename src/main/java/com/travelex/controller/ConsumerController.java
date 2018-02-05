@@ -79,7 +79,7 @@ public class ConsumerController {
 					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_LOGIN), HttpStatus.BAD_REQUEST);
 		}
 		List<Card> cards = cardRepository.findByConsumer(consumers.get(0));
-		cards = TravelexUtils.getDecodedCards(cards);
+		//cards = TravelexUtils.getDecodedCards(cards);
 		
 		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumers.get(0), cards),HttpStatus.OK);
 	}
