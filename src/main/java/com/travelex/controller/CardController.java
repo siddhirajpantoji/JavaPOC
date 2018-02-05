@@ -71,6 +71,8 @@ public class CardController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
+		
+		  
 		if (cardRepository.countByConsumerCardTypeAndCard(consumer.getUserId(), cardRequest.getCardType(), TravelexUtils
 				.encodeString(cardRequest.getCardNumber(), cardRequest.getCardNumber().length() - 4)) > 0) {
 			return new ResponseEntity<BaseResponse>(
