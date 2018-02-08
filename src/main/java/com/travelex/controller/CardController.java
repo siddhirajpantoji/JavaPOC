@@ -56,7 +56,7 @@ public class CardController {
 		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards), HttpStatus.OK);
 	}
 
-	/**  
+	/**
 	 * Api for Creating
 	 * 
 	 * @param consumerRequest
@@ -70,9 +70,7 @@ public class CardController {
 					new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_CONSUMER_ID),
 					HttpStatus.BAD_REQUEST);
 		}
-		
-		
-		  
+
 		if (cardRepository.countByConsumerCardTypeAndCard(consumer.getUserId(), cardRequest.getCardType(), TravelexUtils
 				.encodeString(cardRequest.getCardNumber(), cardRequest.getCardNumber().length() - 4)) > 0) {
 			return new ResponseEntity<BaseResponse>(
@@ -97,12 +95,7 @@ public class CardController {
 					new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_CONSUMER_ID),
 					HttpStatus.BAD_REQUEST);
 		}
-		
-		// // Create a new Card for Consumer
-		// if(!CollectionUtils.isEmpty(consumerRequest.getCards()))
-		// {
-		// for(int counter =0;counter<consumerRequest.getCards().size();counter++)
-		// {
+
 		Card card = cardRepository.findOne(cardRequest.getCardId());
 		if (null == card) {
 			return new ResponseEntity<BaseResponse>(
@@ -116,12 +109,6 @@ public class CardController {
 		BeanUtils.copyProperties(cardRequest, card);
 		card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), card.getCardNumber().length() - 4));
 		cardRepository.save(card);
-		// }
-		// }
-		// else
-		// {
-		// //TODO
-		// }
 
 		return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.OK, MessageConstants.EVERYTHING_LOOKS_GOOD),
 				HttpStatus.OK);

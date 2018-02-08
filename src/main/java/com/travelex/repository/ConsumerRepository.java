@@ -1,12 +1,12 @@
 package com.travelex.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.travelex.entities.Consumer;
-import java.lang.String;
-import java.util.List;
 
 /**
  * This is database repository of User table for Basic CRUD Operations 

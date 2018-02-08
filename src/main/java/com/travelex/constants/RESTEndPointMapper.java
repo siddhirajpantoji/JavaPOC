@@ -1,11 +1,15 @@
 package com.travelex.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * All End points are stored here 
  * @author pantojis
  *
  */
 
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class RESTEndPointMapper {
 
 	public static final String REGISTRATION = "/registration"; //ConsumerController

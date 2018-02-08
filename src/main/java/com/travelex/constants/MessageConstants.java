@@ -1,11 +1,15 @@
 package com.travelex.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * All Message Related Constants are stored here 
  * @author pantojis
  *
  */
+
+@NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class MessageConstants {
 
 	public static final String EVERYTHING_LOOKS_GOOD = "Everything looks good ";

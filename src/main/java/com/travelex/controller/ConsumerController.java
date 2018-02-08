@@ -56,7 +56,7 @@ public class ConsumerController {
 		BeanUtils.copyProperties(consumerRequest, consumer);
 		consumer.setPassword(TravelexUtils.encodeString(consumer.getPassword(),consumer.getPassword().length()));
 		consumer.setUserId(null);
-		consumer = consumerRepository.save(consumer);
+		consumerRepository.save(consumer);
 		LOGGER.info("Created Consumer Successfully ");
 		return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.CREATED, MessageConstants.RECORD_CREATED),
 				HttpStatus.CREATED);

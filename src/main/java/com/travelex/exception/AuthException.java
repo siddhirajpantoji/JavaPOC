@@ -16,7 +16,7 @@ public class AuthException  extends IOException {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String message;
+	private final String message;
 
 	public AuthException(String message) {
 		super();

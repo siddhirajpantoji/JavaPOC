@@ -15,7 +15,7 @@ public class TravelexUtils {
 		if(StringUtils.isEmpty(toEncodeString))
 			return toEncodeString;
 		
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for(int counter =0;counter<toEncodeString.length();counter++)
 		{
 			char c =toEncodeString.charAt(counter);
@@ -33,7 +33,7 @@ public class TravelexUtils {
 		if(StringUtils.isEmpty(toEncodeString))
 			return toEncodeString;
 		
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for(int counter =0;counter<toEncodeString.length();counter++)
 		{
 			char c =toEncodeString.charAt(counter);

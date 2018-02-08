@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.travelex.constants.MessageConstants;
 import com.travelex.exception.AuthException;
 import com.travelex.response.BaseResponse;
 
@@ -39,16 +40,16 @@ public class BasicAuthFilter implements Filter {
 		try {
 			if (StringUtils.isEmpty(authName) || StringUtils.isEmpty(authPwd)) {
 				LOGGER.info("key or password Missing / Empty ");
-				throw new AuthException("Unauthorized Access");
+				throw new AuthException(MessageConstants.UNAUTH_USER);
 			}
 			String pwd = authCred.get(authName);
 			if (null == pwd) {
 				LOGGER.info(" Key Not Exists  ");
-				throw new AuthException("Unauthorized Access");
+				throw new AuthException(MessageConstants.UNAUTH_USER);
 			}
 			if (!authCred.get(authName).equals(authPwd)) {
 				LOGGER.info(" Password Mismatch ");
-				throw new AuthException("Unauthorized Access");
+				throw new AuthException(MessageConstants.UNAUTH_USER);
 			}
 		} catch (AuthException e) {
 			BaseResponse errorResponse = new BaseResponse(HttpStatus.FORBIDDEN, e.getMessage());
