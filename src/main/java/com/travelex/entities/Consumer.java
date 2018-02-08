@@ -32,18 +32,12 @@ public class Consumer {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long userId;
 	
-//	@NotEmpty( message = "Name Cannot be Empty ")
 	private String firstName;
 	private String lastName;
 	
-//	@NotEmpty( message = "Name Cannot be Empty ")
 	@Column( name="email")
 	private String email;
 	
-//	@NotEmpty( message = "Name Cannot be Empty ")
 	private String password;
-
-//	@OneToMany
-//	private List<Card> cards;
 	
 }

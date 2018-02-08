@@ -47,13 +47,14 @@ public class ConsumerController {
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", value = RESTEndPointMapper.REGISTRATION)
 	public ResponseEntity<BaseResponse> createConsumer(@RequestBody ConsumerRequest consumerRequest) {
 		LOGGER.info("Entered into createConsumer");
-		if (consumerRepository.countByEmailId(consumerRequest.getEmail()) > 0) {
+		if (consumerRepository.countByEmailId(consumerRequest.getEmailid()) > 0) {
 			LOGGER.info("Existing User By Email ID ");
 			return new ResponseEntity<BaseResponse>(
 					new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants.DUPLICATE_ENTRY), HttpStatus.BAD_REQUEST);
 		}
 		Consumer consumer = new Consumer();
 		BeanUtils.copyProperties(consumerRequest, consumer);
+		consumer.setPassword(consumerRequest.getPass());
 		consumer.setPassword(TravelexUtils.encodeString(consumer.getPassword(),consumer.getPassword().length()));
 		consumer.setUserId(null);
 		consumerRepository.save(consumer);
@@ -79,7 +80,6 @@ public class ConsumerController {
 					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_LOGIN), HttpStatus.BAD_REQUEST);
 		}
 		List<Card> cards = cardRepository.findByConsumer(consumers.get(0));
-		//cards = TravelexUtils.getDecodedCards(cards);
 		
 		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumers.get(0), cards),HttpStatus.OK);
 	}

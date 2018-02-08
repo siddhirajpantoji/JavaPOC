@@ -35,8 +35,6 @@ public class BasicAuthFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		String authName = request.getHeader("key");
 		String authPwd = request.getHeader("password");
-		// LOGGER.info("In Filter key =" + authName);
-		// LOGGER.info("In Filter pwd =" + authPwd);
 		try {
 			if (StringUtils.isEmpty(authName) || StringUtils.isEmpty(authPwd)) {
 				LOGGER.info("key or password Missing / Empty ");
