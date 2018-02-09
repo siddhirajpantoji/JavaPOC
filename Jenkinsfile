@@ -4,13 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-             cmd 'mvn package' 
+              checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/siddhirajpantoji/JavaPOC.git']]])
+               bat 'mvn package '
+               
             }
         }
         stage('Test') {
             steps {
-               cmd 'mvn verify '
+               waitForQualityGate()
             }
         }
         stage('Deploy') {
