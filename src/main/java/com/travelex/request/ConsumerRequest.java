@@ -20,9 +20,9 @@ public class ConsumerRequest {
 	private String lastName;
 	
 	@NotEmpty( message = "Email Id Cannot be Empty ")
-	private String emailid;
+	private String email;
 	
 	@NotEmpty( message = "Password Cannot be Empty ")
-	private String pass;
-	
+	private String password;
+		
 }
