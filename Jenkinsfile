@@ -15,7 +15,7 @@ pipeline {
         }
         stage('CodeCheck') {
             steps {
-            		withSonarQubeEnv('sonarjava') {
+            		withSonarQubeEnv('SonarQube') {
 						bat 'mvn sonar:sonar'
 					   }
 		    	         script {
