@@ -18,7 +18,7 @@ pipeline {
         stage('CodeCheck') {
             steps {
               script {
-		            def qg = waitForQualityGate('SonarQube')
+		            def qg = waitForQualityGate(SonarQube)
 		            if (qg.status != 'OK') {
 		              error "Pipeline aborted due to quality gate failure: ${qg.status}"
 		            }
