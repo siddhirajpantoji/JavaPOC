@@ -43,4 +43,20 @@ public class ConsumerResponse extends BaseResponse {
 		this.cards = cards;
 	}
 
+	public ConsumerResponse()
+	{
+		super(HttpStatus.OK, MessageConstants.EVERYTHING_LOOKS_GOOD);
+	}
+
+	public ConsumerResponse(HttpStatus status, String message, String firstName, String lastName, String email,
+			Long consumerId, List<Card> cards) {
+		super(status, message);
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.consumerId = consumerId;
+		this.cards = cards;
+	}
+	
+	
 }

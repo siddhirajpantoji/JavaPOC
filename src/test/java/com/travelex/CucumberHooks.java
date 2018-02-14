@@ -2,6 +2,7 @@ package com.travelex;
 
 
 import org.apache.log4j.Logger;
+import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
 import cucumber.api.java.After;
@@ -16,14 +17,14 @@ public class CucumberHooks {
 	public void beforeScenario() {
 		LOGGER.info("Starting setup ");
 		// Start Setup here
-//		String[] args = { "" };
-//		context = SpringApplication.run(TravelexTestApplication.class, args);
+		String[] args = { "" };
+		context = SpringApplication.run(TravelexTestApplication.class, args);
 	}
 
 	@After
 	public void afterScenario() {
 		LOGGER.info("Exiting from Setup ");
-		// End Setup here
-//		SpringApplication.exit(context);
+		 //End Setup here
+		SpringApplication.exit(context);
 	}
 }
