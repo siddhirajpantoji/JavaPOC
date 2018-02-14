@@ -13,7 +13,6 @@ import lombok.ToString;
 @EqualsAndHashCode( callSuper = false)
 public class ConsumerRequest {
 
-	private Long userId;
 	
 //	@NotEmpty( message = "Name Cannot be Empty ")
 	private String firstName;

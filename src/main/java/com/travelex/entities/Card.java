@@ -38,7 +38,7 @@ public class Card {
 	private Long cardId;
 
 	@NotEmpty
-	@Size(max = 16, min = 16, message = "Card Number must be 16 digits ")
+//	@Size(max = 16, min = 16, message = "Card Number must be 16 digits ")
 	@Column(name="card_number")
 	private String cardNumber;
 

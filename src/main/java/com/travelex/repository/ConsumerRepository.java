@@ -1,7 +1,5 @@
 package com.travelex.repository;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +19,6 @@ public interface ConsumerRepository extends JpaRepository<Consumer, Long> {
 	@Query( nativeQuery=true, value="Select count(*) from consumer where email=:emailId")
 	Long countByEmailId(@Param("emailId")String emailId);
 
-	List<Consumer> findByEmailAndPassword(String emailid, String password);
+	@Query( nativeQuery = true, value =" Select * From consumer where email=:email and password=:password")
+	Consumer findByEmailAndPassword(@Param("email") String emailid, @Param("password") String password);
 }

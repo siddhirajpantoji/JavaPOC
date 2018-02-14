@@ -47,17 +47,13 @@ public class ConsumerController {
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", value = RESTEndPointMapper.REGISTRATION)
 	public ResponseEntity<BaseResponse> createConsumer(@RequestBody ConsumerRequest consumerRequest) {
 		LOGGER.info("Entered into createConsumer");
-		if (consumerRepository.countByEmailId(consumerRequest.getEmail()) > 0) {
-			LOGGER.info("Existing User By Email ID ");
-			return new ResponseEntity<BaseResponse>(
-					new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants.DUPLICATE_ENTRY), HttpStatus.BAD_REQUEST);
-		}
+		consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
 		Consumer consumer = new Consumer();
-		BeanUtils.copyProperties(consumerRequest, consumer);
-		
-		//consumer.setPassword(consumerRequest.getPass());
-		consumer.setPassword(TravelexUtils.encodeString(consumer.getPassword(),consumer.getPassword().length()));
-		consumer.setUserId(null);
+		consumer.setEmail(consumerRequest.getEmail());
+		consumer.setPassword(consumerRequest.getPassword());
+		consumer.setFirstName(consumerRequest.getFirstName());
+		consumer.setLastName(consumerRequest.getLastName());
+		//BeanUtils.copyProperties(consumerRequest, consumer);		
 		consumerRepository.save(consumer);
 		LOGGER.info("Created Consumer Successfully ");
 		return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.CREATED, MessageConstants.RECORD_CREATED),
@@ -68,21 +64,16 @@ public class ConsumerController {
 	@ApiOperation(value = "Checks Login for Each User  ", response = ConsumerResponse.class)
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", value = RESTEndPointMapper.LOGIN)
 	public ResponseEntity<ConsumerResponse> login(@Valid @RequestBody LoginRequest consumerRequest) {
-		if (consumerRepository.countByEmailId(consumerRequest.getEmailId()) <= 0) {
-			LOGGER.info("Not Existing User By Email ID ");
-			return new ResponseEntity<ConsumerResponse>(
-					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.USER_NOT_EXISTS), HttpStatus.BAD_REQUEST);
-		}
 		consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
-		List<Consumer> consumers = consumerRepository.findByEmailAndPassword(consumerRequest.getEmailId(),consumerRequest.getPassword());
-		if(CollectionUtils.isEmpty(consumers))
+		Consumer consumer = consumerRepository.findByEmailAndPassword(consumerRequest.getEmailId(),consumerRequest.getPassword());
+		if(null == consumer)
 		{
 			return new ResponseEntity<ConsumerResponse>(
 					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_LOGIN), HttpStatus.BAD_REQUEST);
 		}
-		List<Card> cards = cardRepository.findByConsumer(consumers.get(0));
-		
-		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumers.get(0), cards),HttpStatus.OK);
+		List<Card> cards = cardRepository.findByConsumer(consumer.getUserId());
+	
+		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards),HttpStatus.OK);
 	}
 	
 }

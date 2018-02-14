@@ -12,10 +12,14 @@ public class TravelexUtils {
 
 	public static String encodeString(String toEncodeString, int lengthToEncode)
 	{
-		if(StringUtils.isEmpty(toEncodeString))
-			return toEncodeString;
-		
 		StringBuilder buffer = new StringBuilder();
+//		toEncodeString.chars().forEach((i)-> {
+//			if(i<lengthToEncode)
+//			{
+//				i = i- toEncodeString.length();
+//			}
+//			buffer.append(i);
+//		});
 		for(int counter =0;counter<toEncodeString.length();counter++)
 		{
 			char c =toEncodeString.charAt(counter);
@@ -34,6 +38,7 @@ public class TravelexUtils {
 			return toEncodeString;
 		
 		StringBuilder buffer = new StringBuilder();
+		
 		for(int counter =0;counter<toEncodeString.length();counter++)
 		{
 			char c =toEncodeString.charAt(counter);

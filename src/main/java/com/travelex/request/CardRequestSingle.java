@@ -24,7 +24,7 @@ public class CardRequestSingle {
 	@ApiModelProperty(required= true,value="user id of Card Holder ")
 	private Long userId;
 	
-	@Size(max=16, min = 16, message= "Card Number must be 16 digits ")
+//	@Size(max=16, min = 16, message= "Card Number must be 16 digits ")
 //	@Pattern(regexp="[0-9]",message="Test ")
 //	@MatchesPattern(value="[0-9]")
 	private String cardNumber;

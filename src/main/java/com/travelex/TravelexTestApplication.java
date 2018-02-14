@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -16,6 +17,7 @@ import com.travelex.filter.BasicAuthFilter;
 @SpringBootApplication
 @EnableJpaRepositories( basePackages="com.travelex.repository")
 @EntityScan(basePackages="com.travelex.entities")
+@EnableCaching
 public class TravelexTestApplication {
 
 	public static void main(String[] args) {

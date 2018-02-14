@@ -38,11 +38,11 @@ public class CardController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<ConsumerResponse> getCardDetails(@RequestParam(value = "userId") Long userId) {
-		if (null == userId) {
-			return new ResponseEntity<ConsumerResponse>(
-					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_CONSUMER_ID),
-					HttpStatus.BAD_REQUEST);
-		}
+//		if (null == userId) {
+//			return new ResponseEntity<ConsumerResponse>(
+//					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_CONSUMER_ID),
+//					HttpStatus.BAD_REQUEST);
+//		}
 		Consumer consumer = consumerRepository.findOne(userId);
 		if (null == consumer) {
 			return new ResponseEntity<ConsumerResponse>(
@@ -50,8 +50,8 @@ public class CardController {
 					HttpStatus.BAD_REQUEST);
 		}
 
-		List<Card> cards = cardRepository.findByConsumer(consumer);
-		cards = TravelexUtils.getDecodedCards(cards);
+		List<Card> cards = cardRepository.findByConsumer(userId);
+		//cards = TravelexUtils.getDecodedCards(cards);
 
 		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards), HttpStatus.OK);
 	}
@@ -71,16 +71,16 @@ public class CardController {
 					HttpStatus.BAD_REQUEST);
 		}
 
-		if (cardRepository.countByConsumerCardTypeAndCard(consumer.getUserId(), cardRequest.getCardType(), TravelexUtils
+/*		if (cardRepository.countByConsumerCardTypeAndCard(consumer.getUserId(), cardRequest.getCardType(), TravelexUtils
 				.encodeString(cardRequest.getCardNumber(), cardRequest.getCardNumber().length() - 4)) > 0) {
 			return new ResponseEntity<BaseResponse>(
 					new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants.CARD_EXISTS_FOR_CONSUMER),
 					HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		Card card = new Card();
 		BeanUtils.copyProperties(cardRequest, card);
 		card.setConsumer(consumer);
-		card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), card.getCardNumber().length() - 4));
+		card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), 12));
 		cardRepository.save(card);
 
 		return new ResponseEntity<BaseResponse>(
@@ -107,7 +107,6 @@ public class CardController {
 					new BaseResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_CARD_ID), HttpStatus.BAD_REQUEST);
 		}
 		BeanUtils.copyProperties(cardRequest, card);
-		card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), card.getCardNumber().length() - 4));
 		cardRepository.save(card);
 
 		return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.OK, MessageConstants.EVERYTHING_LOOKS_GOOD),
