@@ -5,11 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +23,6 @@ import com.travelex.request.ConsumerRequest;
 import com.travelex.request.LoginRequest;
 import com.travelex.response.BaseResponse;
 import com.travelex.response.ConsumerResponse;
-import com.travelex.utils.TravelexUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +44,7 @@ public class ConsumerController {
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", value = RESTEndPointMapper.REGISTRATION)
 	public ResponseEntity<BaseResponse> createConsumer(@RequestBody ConsumerRequest consumerRequest) {
 		LOGGER.info("Entered into createConsumer");
-		consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
+		//consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
 		Consumer consumer = new Consumer();
 		consumer.setEmail(consumerRequest.getEmail());
 		consumer.setPassword(consumerRequest.getPassword());
@@ -64,7 +61,7 @@ public class ConsumerController {
 	@ApiOperation(value = "Checks Login for Each User  ", response = ConsumerResponse.class)
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", value = RESTEndPointMapper.LOGIN)
 	public ResponseEntity<ConsumerResponse> login(@Valid @RequestBody LoginRequest consumerRequest) {
-		consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
+		//consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
 		Consumer consumer = consumerRepository.findByEmailAndPassword(consumerRequest.getEmailId(),consumerRequest.getPassword());
 		if(null == consumer)
 		{

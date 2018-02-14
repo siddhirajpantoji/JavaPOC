@@ -24,7 +24,6 @@ import com.travelex.request.CardRequest;
 import com.travelex.request.CardRequestSingle;
 import com.travelex.response.BaseResponse;
 import com.travelex.response.ConsumerResponse;
-import com.travelex.utils.TravelexUtils;
 
 @RestController
 @RequestMapping(value = RESTEndPointMapper.CARD_DETAILS)
@@ -80,7 +79,7 @@ public class CardController {
 		Card card = new Card();
 		BeanUtils.copyProperties(cardRequest, card);
 		card.setConsumer(consumer);
-		card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), 12));
+		//card.setCardNumber(TravelexUtils.encodeString(card.getCardNumber(), 12));
 		cardRepository.save(card);
 
 		return new ResponseEntity<BaseResponse>(
