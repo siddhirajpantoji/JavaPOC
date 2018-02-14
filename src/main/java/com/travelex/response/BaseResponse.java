@@ -8,12 +8,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @ToString( callSuper = false)
 @EqualsAndHashCode( callSuper = false)
 @JsonInclude(value=Include.NON_NULL)
+@NoArgsConstructor
 public class BaseResponse {
 
 	@ApiModelProperty(notes = "HttpStatus Code ")
@@ -25,4 +27,5 @@ public class BaseResponse {
 		this.status = status;
 		this.message = message;
 	}
+	
 }

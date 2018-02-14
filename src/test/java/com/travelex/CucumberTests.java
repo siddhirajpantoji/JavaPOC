@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.travelex.request.ConsumerRequest;
+import com.travelex.request.LoginRequest;
+import com.travelex.response.BaseResponse;
 import com.travelex.response.ConsumerResponse;
 
 import cucumber.api.PendingException;
@@ -18,7 +20,8 @@ public class CucumberTests {
 
 	private static final Logger LOGGER = Logger.getLogger(CucumberTests.class);
 
-	private ResponseEntity<ConsumerResponse> consumerResponse = null;
+	private ResponseEntity<BaseResponse> registrationResponse = null;
+	private ResponseEntity<ConsumerResponse> loginResponse = null;
 	private static final String BASE_PATH = "http://localhost:8082/";
 	@Autowired
 	protected TestRestTemplate restTemplate;
@@ -34,14 +37,20 @@ public class CucumberTests {
 		consumerRequest.setFirstName("Siddhiraj ");
 		consumerRequest.setLastName("Pantoji");
 		RestTemplate restTemplate = new RestTemplate();		
-		consumerResponse= restTemplate.postForEntity(BASE_PATH+"/registration", consumerRequest, ConsumerResponse.class);
+		registrationResponse= restTemplate.postForEntity(BASE_PATH+"/registration", consumerRequest, BaseResponse.class);
 		LOGGER.info("Exit user_Registers_for_First_Time ");
 	}
 
 	@Then("^Logs in with the same Email Id$")
 	public void logs_in_with_the_same_Email_Id() throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		LOGGER.info("Into logs_in_with_the_same_Email_Id ");
+		LoginRequest loginRequest=  new LoginRequest();
+		loginRequest.setEmailId("siddhirajpantoji1@gmail.com");
+		loginRequest.setPassword("Sidd@123");
+		RestTemplate restTemplate = new RestTemplate();		
+		loginResponse= restTemplate.postForEntity(BASE_PATH+"/login", loginRequest, ConsumerResponse.class);
+		LOGGER.info("Exit logs_in_with_the_same_Email_Id ");
 	}
 
 	@Then("^Gets Card Details with the user Id$")
