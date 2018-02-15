@@ -26,12 +26,12 @@ import com.travelex.response.ValidationResponse;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	private static final Logger LOGGER = Logger.getLogger(GlobalExceptionHandler.class.getName());
+//	private static final Logger LOGGER = Logger.getLogger(GlobalExceptionHandler.class.getName());
 	
 	@ExceptionHandler(AuthException.class)
 	public  BaseResponse handleAuthResponse(AuthException exception)
 	{
-		LOGGER.error("Unauthorised Access ");
+//		LOGGER.error("Unauthorised Access ");
 		return new BaseResponse(HttpStatus.FORBIDDEN, exception.getMessage());
 	}
 	
@@ -78,14 +78,15 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<BaseResponse> handleAllResponse(Exception exception)
 	{
-		LOGGER.error("Exception occured ",exception);
+		exception.printStackTrace();
+//		LOGGER.error("Exception occured ",exception);
 		return new ResponseEntity<BaseResponse>(new  BaseResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public ResponseEntity<BaseResponse> handleAllResponse(MissingServletRequestParameterException exception)
 	{
-		LOGGER.error("MissingServletRequestParameterException occured ",exception);
+//		LOGGER.error("MissingServletRequestParameterException occured ",exception);
 		return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.BAD_REQUEST, exception.getMessage()),HttpStatus.BAD_REQUEST);
 	}
 }

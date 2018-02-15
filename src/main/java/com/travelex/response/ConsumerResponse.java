@@ -18,6 +18,7 @@ import lombok.ToString;
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(value = Include.NON_NULL)
+
 public class ConsumerResponse extends BaseResponse {
 
 	private String firstName;
