@@ -10,6 +10,8 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.validation.Valid;
 
+import org.hibernate.Session;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +46,11 @@ public class CardController {
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		try {
-			connection = TravelexUtils.getConnection();
+
+			Session session = em.unwrap(Session.class);
+			SessionFactoryImplementor sfi = (SessionFactoryImplementor) session.getSessionFactory();
+			connection = sfi.getJdbcServices().getBootstrapJdbcConnectionAccess().obtainConnection();
+//			connection = TravelexUtils.getConnection();
 			String query = "Select * from getcarddetails(?)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, Integer.parseInt(userId.toString()));
@@ -67,40 +73,81 @@ public class CardController {
 	 * 
 	 * @param consumerRequest
 	 * @return
+	 * @throws SQLException 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public Object addCardDetails(@Valid @RequestBody CardRequestSingle cardRequest) {
-
+	public Object addCardDetails(@Valid @RequestBody CardRequestSingle cardRequest) throws SQLException {
 		cardRequest.setCardNumber(TravelexUtils.encodeString(cardRequest.getCardNumber(), 12));
-		StoredProcedureQuery query = this.em.createStoredProcedureQuery("addcard");
-		query.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(4, String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(5, Boolean.class, ParameterMode.IN);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			Session session = em.unwrap(Session.class);
+			SessionFactoryImplementor sfi = (SessionFactoryImplementor) session.getSessionFactory();
+			connection = sfi.getJdbcServices().getBootstrapJdbcConnectionAccess().obtainConnection();
+			String query = "Select * from addcard(?,?,?,?,?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, Integer.parseInt(cardRequest.getUserId().toString()));
+			preparedStatement.setString(2, cardRequest.getCardNumber());
+			preparedStatement.setString(3, cardRequest.getCardType());
+			preparedStatement.setString(4, cardRequest.getExpiryDate());
+			preparedStatement.setBoolean(5, cardRequest.isActive());
+			rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				String response = rs.getString(1);
+				return response;
+			}
 
-		query.setParameter(1, Integer.parseInt(cardRequest.getUserId().toString()));
-		query.setParameter(2, cardRequest.getCardNumber());
-		query.setParameter(3, cardRequest.getCardType());
-		query.setParameter(4, cardRequest.getExpiryDate());
-		query.setParameter(5, cardRequest.isActive());
-		return query.getSingleResult();
+		} finally {
+			rs.close();
+			preparedStatement.close();
+			connection.close();
+		}
+		return null;
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public Object updateCardDetails(@Valid @RequestBody CardRequest cardRequest) {
-		StoredProcedureQuery query = this.em.createStoredProcedureQuery("updatecarddetails");
-		query.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(4, String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(5, Boolean.class, ParameterMode.IN);
+	public Object updateCardDetails(@Valid @RequestBody CardRequest cardRequest) throws SQLException {
+		//cardRequest.setCardNumber(TravelexUtils.encodeString(cardRequest.getCardNumber(), 12));
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			Session session = em.unwrap(Session.class);
+			SessionFactoryImplementor sfi = (SessionFactoryImplementor) session.getSessionFactory();
+			connection = sfi.getJdbcServices().getBootstrapJdbcConnectionAccess().obtainConnection();
+			String query = "Select * from updatecarddetails(?,?,?,?,?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, Integer.parseInt(cardRequest.getUserId().toString()));
+			preparedStatement.setInt(2, Integer.parseInt(cardRequest.getCardId().toString()));
+			preparedStatement.setString(3, cardRequest.getCardType());
+			preparedStatement.setString(4, cardRequest.getExpiryDate());
+			preparedStatement.setBoolean(5, cardRequest.isActive());
+			rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				String response = rs.getString(1);
+				return response;
+			}
 
-		query.setParameter(1, Integer.parseInt(cardRequest.getUserId().toString()));
-		query.setParameter(2, Integer.parseInt(cardRequest.getCardId().toString()));
-		query.setParameter(3, cardRequest.getCardType());
-		query.setParameter(4, cardRequest.getExpiryDate());
-		query.setParameter(5, cardRequest.isActive());
-		return query.getSingleResult();
+		} finally {
+			rs.close();
+			preparedStatement.close();
+			connection.close();
+		}
+		return null;
+
+//		StoredProcedureQuery query = this.em.createStoredProcedureQuery("updatecarddetails");
+//		query.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
+//		query.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
+//		query.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
+//		query.registerStoredProcedureParameter(4, String.class, ParameterMode.IN);
+//		query.registerStoredProcedureParameter(5, Boolean.class, ParameterMode.IN);
+//
+//		query.setParameter(1, Integer.parseInt(cardRequest.getUserId().toString()));
+//		query.setParameter(2, Integer.parseInt(cardRequest.getCardId().toString()));
+//		query.setParameter(3, cardRequest.getCardType());
+//		query.setParameter(4, cardRequest.getExpiryDate());
+//		query.setParameter(5, cardRequest.isActive());
+//		return query.getSingleResult();
 	}
 }
