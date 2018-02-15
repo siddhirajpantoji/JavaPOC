@@ -1,6 +1,9 @@
 package com.travelex.controller;
 
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -8,8 +11,6 @@ import javax.persistence.StoredProcedureQuery;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,13 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.travelex.constants.RESTEndPointMapper;
-import com.travelex.entities.Card;
-import com.travelex.entities.Consumer;
 import com.travelex.repository.CardRepository;
 import com.travelex.repository.ConsumerRepository;
 import com.travelex.request.CardRequest;
 import com.travelex.request.CardRequestSingle;
-import com.travelex.response.ConsumerResponse;
 import com.travelex.utils.TravelexUtils;
 
 @RestController
@@ -40,12 +38,28 @@ public class CardController {
 	EntityManager em;
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ConsumerResponse> getCardDetails(@RequestParam(value = "userId") Long userId) {
+	public Object getCardDetails(@RequestParam(value = "userId") Long userId) throws SQLException {
 
-		List<Card> cards = cardRepository.findByConsumer(userId);
-		Consumer consumer = null;
-		consumer = cards.get(0).getConsumer();
-		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards), HttpStatus.OK);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			connection = TravelexUtils.getConnection();
+			String query = "Select * from getcarddetails(?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, Integer.parseInt(userId.toString()));
+			rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				String response = rs.getString(1);
+				return response;
+			}
+
+		} finally {
+			rs.close();
+			preparedStatement.close();
+			connection.close();
+		}
+		return null;
 	}
 
 	/**

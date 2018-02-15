@@ -1,7 +1,11 @@
 package com.travelex.utils;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -64,5 +68,21 @@ public class TravelexUtils {
 			returnCards.add(card);
 		}
 		return returnCards;
+	}
+	
+	public static Connection getConnection() {
+		Connection connection = null;
+		try {
+			String url = "jdbc:postgresql://localhost:5432/TechPOC";
+			Properties props = new Properties();
+			props.setProperty("user", "postgres");
+			props.setProperty("password", "root");
+			connection = DriverManager.getConnection(url, props);
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		return connection;
 	}
 }

@@ -3,9 +3,9 @@ package com.travelex.entities;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
-import javax.persistence.EntityResult;
-import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,16 +28,30 @@ import lombok.ToString;
  */
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
-@SqlResultSetMappings({ @SqlResultSetMapping(name = "ConsumerMapping", entities = {
-		@EntityResult(entityClass = Consumer.class, fields = {
-				@FieldResult(name="cards", column="cards"),
-				@FieldResult(name="first_name", column="first_name"),
-				@FieldResult(name="last_name", column="last_name"),
-				@FieldResult(name="user_id", column="user_id"),
-				@FieldResult(name="email", column="email"),
-		}) })
+// @SqlResultSetMappings({ @SqlResultSetMapping(name = "ConsumerMapping",
+// entities = {
+// @EntityResult(entityClass = Consumer.class, fields = {
+// @FieldResult(name="cards", column="cards"),
+// @FieldResult(name="first_name", column="first_name"),
+// @FieldResult(name="last_name", column="last_name"),
+// @FieldResult(name="user_id", column="user_id"),
+// @FieldResult(name="email", column="email"),
+// }) })
+//
+// })
+@SqlResultSetMappings({ @SqlResultSetMapping(name = "ConsumerMapping", classes = {
+		@ConstructorResult(targetClass = Consumer.class, columns = {
+				@ColumnResult(name = "userId", type = Long.class),
+				@ColumnResult(name = "firstName", type = String.class),
+				@ColumnResult(name = "lastName", type = String.class),
+				@ColumnResult(name = "email", type = String.class),
+				@ColumnResult(name = "cards", type = Card.class)
+				}
+		)
+		})
 
 })
+
 @Data
 @NoArgsConstructor
 @ToString(callSuper = false)
@@ -79,7 +93,7 @@ public class Consumer {
 		this.email = email;
 	}
 
-	public Consumer( List<Card> cards ,String firstName, String lastName, Long userId, String email) {
+	public Consumer( Long userId, String firstName, String lastName, String email, List<Card> cards) {
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;

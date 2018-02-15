@@ -1,24 +1,28 @@
 package com.travelex.controller;
 
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.validation.Valid;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.travelex.constants.MessageConstants;
 import com.travelex.constants.RESTEndPointMapper;
-import com.travelex.entities.Card;
-import com.travelex.entities.Consumer;
 import com.travelex.repository.CardRepository;
 import com.travelex.repository.ConsumerRepository;
 import com.travelex.request.ConsumerRequest;
@@ -34,6 +38,8 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Consumer Controller", description = "Login and Create of Consumer  ")
 public class ConsumerController {
 
+	// private static final Logger LOGGER =
+	// Logger.getLogger(ConsumerController.class);
 
 	@Autowired
 	EntityManager em;
@@ -65,19 +71,34 @@ public class ConsumerController {
 
 	@ApiOperation(value = "Checks Login for Each User  ", response = ConsumerResponse.class)
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", value = RESTEndPointMapper.LOGIN)
-	public ResponseEntity<ConsumerResponse> login(@Valid @RequestBody LoginRequest consumerRequest) {
+	public Object login(@Valid @RequestBody LoginRequest consumerRequest) throws SQLException, JSONException {
 		consumerRequest.setPassword(
 				TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
-		Consumer consumer = consumerRepository.findByEmailAndPassword(consumerRequest.getEmailId(),
-				consumerRequest.getPassword());
-		if (null == consumer) {
-			return new ResponseEntity<ConsumerResponse>(
-					new ConsumerResponse(HttpStatus.BAD_REQUEST, MessageConstants.INVALID_LOGIN),
-					HttpStatus.BAD_REQUEST);
-		}
-		List<Card> cards = cardRepository.findByConsumer(consumer.getUserId());
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			connection = TravelexUtils.getConnection();
+			String query = "Select * from getconsumerdetails(?,?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, consumerRequest.getEmailId());
+			preparedStatement.setString(2, consumerRequest.getPassword());
+			rs = preparedStatement.executeQuery();
+			// rs = statement.executeQuery(
+			// "Select * from getconsumerdetails('" + consumerRequest.getEmailId() +
+			// "','Ka\\\\\\\\8)*+')");
+			if (rs.next()) {
+				String response = rs.getString(1);
+				return response;
+			}
 
-		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards), HttpStatus.OK);
+		} finally {
+			rs.close();
+			preparedStatement.close();
+			connection.close();
+		}
+		return null;
 	}
 
+	
 }
