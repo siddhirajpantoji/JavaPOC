@@ -34,8 +34,6 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Consumer Controller", description = "Login and Create of Consumer  ")
 public class ConsumerController {
 
-	// private static final Logger LOGGER =
-	// Logger.getLogger(ConsumerController.class);
 
 	@Autowired
 	EntityManager em;
@@ -70,8 +68,6 @@ public class ConsumerController {
 	public ResponseEntity<ConsumerResponse> login(@Valid @RequestBody LoginRequest consumerRequest) {
 		consumerRequest.setPassword(
 				TravelexUtils.encodeString(consumerRequest.getPassword(), consumerRequest.getPassword().length()));
-		// consumerRequest.setPassword(TravelexUtils.encodeString(consumerRequest.getPassword(),
-		// consumerRequest.getPassword().length()));
 		Consumer consumer = consumerRepository.findByEmailAndPassword(consumerRequest.getEmailId(),
 				consumerRequest.getPassword());
 		if (null == consumer) {
@@ -80,52 +76,8 @@ public class ConsumerController {
 					HttpStatus.BAD_REQUEST);
 		}
 		List<Card> cards = cardRepository.findByConsumer(consumer.getUserId());
-		
-		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards),HttpStatus.OK);
-//		// Session session = (Session) this.em.getDelegate();
-//		// ProcedureCall procedureCall =
-//		// session.createStoredProcedureCall("getconsumerdetails");
-//		// procedureCall.registerParameter("emailid", String.class, ParameterMode.IN);
-//		// procedureCall.registerParameter("pass", String.class, ParameterMode.IN);
-//		// procedureCall.getParameterRegistration("emailid").bindValue(consumerRequest.getEmailId());
-//		// procedureCall.getParameterRegistration("pass").bindValue(consumerRequest.getPassword());
-//		// ProcedureOutputs procedureOutputs = procedureCall.getOutputs();
-//		// System.out.println(procedureOutputs);
-//		// ResultSetOutput resultSetOutput = (ResultSetOutput)
-//		// procedureOutputs.getCurrent();
-//		// System.out.println(resultSetOutput);
-//		// List results = resultSetOutput.getResultList();
-//		// System.out.println(results);
-//
-//		javax.persistence.Query query1 = this.em.createNativeQuery(
-//				"Select * from getconsumerdetails('" + consumerRequest.getEmailId() + "','Ka\\\\8)*+')",
-//				"ConsumerMapping");
-//		System.out.println(query1.getSingleResult());
-//		// StoredProcedureQuery query = this.em.createStoredProcedureQuery(" Select *
-//		// from getconsumerdetails()");
-//		// // return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer,
-//		// // cards), HttpStatus.OK);
-//		// // query.registerStoredProcedureParameter(1, Object.class,
-//		// ParameterMode.OUT);
-//		// query.registerStoredProcedureParameter("emailid", String.class,
-//		// ParameterMode.IN);
-//		// query.registerStoredProcedureParameter("pass", String.class,
-//		// ParameterMode.IN);
-//		// // query.registerStoredProcedureParameter(3, JSONObject.class,
-//		// // ParameterMode.OUT);
-//		// JSONObject jsonObject = null;
-//		// // Object object =null;
-//		// // //query.setParameter(1,object );
-//		// query.setParameter("emailid", consumerRequest.getEmailId());
-//		// query.setParameter("pass", consumerRequest.getPassword());
-//		// // query.setParameter(3, jsonObject);
-//		// System.out.println(query.getSingleResult());
-//		// jsonObject = (JSONObject) query.getOutputParameterValue(1);
-//		// return jsonObject;
-//		// return (JSONObject) query.getSingleResult();
-//		// return object;
-//		// return consumers;
-//		return null;
+
+		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumer, cards), HttpStatus.OK);
 	}
 
 }
