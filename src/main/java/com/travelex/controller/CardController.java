@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
 import javax.validation.Valid;
 
 import org.hibernate.Session;
@@ -135,19 +133,5 @@ public class CardController {
 			connection.close();
 		}
 		return null;
-
-//		StoredProcedureQuery query = this.em.createStoredProcedureQuery("updatecarddetails");
-//		query.registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN);
-//		query.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN);
-//		query.registerStoredProcedureParameter(3, String.class, ParameterMode.IN);
-//		query.registerStoredProcedureParameter(4, String.class, ParameterMode.IN);
-//		query.registerStoredProcedureParameter(5, Boolean.class, ParameterMode.IN);
-//
-//		query.setParameter(1, Integer.parseInt(cardRequest.getUserId().toString()));
-//		query.setParameter(2, Integer.parseInt(cardRequest.getCardId().toString()));
-//		query.setParameter(3, cardRequest.getCardType());
-//		query.setParameter(4, cardRequest.getExpiryDate());
-//		query.setParameter(5, cardRequest.isActive());
-//		return query.getSingleResult();
 	}
 }

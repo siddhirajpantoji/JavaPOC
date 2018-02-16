@@ -6,12 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
 import javax.validation.Valid;
 
 import org.hibernate.Session;
-import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;

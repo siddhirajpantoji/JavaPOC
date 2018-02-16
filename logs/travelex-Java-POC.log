@@ -10321,3 +10321,9 @@ Caused by: java.lang.ClassNotFoundException: com.travelex.filter.BasicAuthFilter
 2018-02-15 19:26:44.774  INFO 15556 --- [main] s.w.ClassOrApiAnnotationResourceGrouping : Group for method login was consumer-controller
 2018-02-15 19:26:44.972  INFO 15556 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
 2018-02-15 19:26:44.996  INFO 15556 --- [main] com.travelex.TravelexTestApplication     : Started TravelexTestApplication in 19.73 seconds (JVM running for 20.79)
+2018-02-15 19:26:50.515  INFO 15556 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-02-15 19:26:50.515  INFO 15556 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-02-15 19:26:50.582  INFO 15556 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 65 ms
+2018-02-16 11:42:07.795  INFO 15556 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@5cb0d902: startup date [Thu Feb 15 19:26:27 IST 2018]; root of context hierarchy
+2018-02-16 11:42:07.830  INFO 15556 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-02-16 11:42:07.860  INFO 15556 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
