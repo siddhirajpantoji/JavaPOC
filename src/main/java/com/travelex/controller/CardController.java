@@ -24,6 +24,7 @@ import com.travelex.request.CardRequest;
 import com.travelex.request.CardRequestSingle;
 import com.travelex.response.BaseResponse;
 import com.travelex.response.ConsumerResponse;
+import com.travelex.utils.TravelexUtils;
 
 @RestController
 @RequestMapping(value = RESTEndPointMapper.CARD_DETAILS)
@@ -63,6 +64,7 @@ public class CardController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<BaseResponse> addCardDetails(@Valid @RequestBody CardRequestSingle cardRequest) {
+		cardRequest.setCardNumber(TravelexUtils.encodeString(cardRequest.getCardNumber(), 12));
 		Consumer consumer = consumerRepository.findOne(cardRequest.getUserId());
 		if (null == consumer) {
 			return new ResponseEntity<BaseResponse>(
