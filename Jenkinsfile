@@ -38,6 +38,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                	bat 'mvnw dockerfile:build'
+                	bat 'mvn dockerfile:push'
             }
         }
     }
