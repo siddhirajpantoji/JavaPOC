@@ -30,7 +30,7 @@ pipeline {
 								   		 }
 								   		 
 						    	} 
-						    	sleep 5 
+						    	sleep 15 
 							}
 		      	 }
 			}
