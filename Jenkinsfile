@@ -40,6 +40,7 @@ pipeline {
             steps {
                 echo 'Building Docker Image '
                 script{
+                	bat 'mkdir /tmp'
                 	docker.build("siddhirajpantoji/testrest")
                 }
             }
