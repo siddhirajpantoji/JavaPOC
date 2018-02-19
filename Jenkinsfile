@@ -21,8 +21,8 @@ pipeline {
 					   }
 		    	     script {
 		    	     
-		    	     retry(10) {
-			    	      	timeout(time: 15, unit: 'SECONDS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+		    	     retry(20) {
+			    	      	timeout(time: 10, unit: 'SECONDS') { // Just in case something goes wrong, pipeline will be killed after a timeout
 						    	// some block
     									def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
 								    	if (qg.status != 'OK') {
@@ -30,7 +30,7 @@ pipeline {
 								   		 }
 								   		 
 						    	} 
-						    	sleep 15 
+						    	//sleep 15 
 							}
 		      	 }
 			}
