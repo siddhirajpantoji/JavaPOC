@@ -42,9 +42,6 @@ pipeline {
                 script{
                 	docker.build("siddhirajpantoji/testrest")
                 }
-              // docker.build("siddhirajpantoji/testrest")
-                //	bat 'mvnw dockerfile:build'
-                //	bat 'mvn dockerfile:push'
             }
         }
     }
