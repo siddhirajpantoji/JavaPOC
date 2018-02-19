@@ -38,7 +38,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                bat 'C:\Program Files\Git\bin\bash.exe --login -i C:\Program Files\Docker Toolbox\start.sh'
+                bat "'C:\Program Files\Git\bin\bash.exe' --login -i 'C:\Program Files\Docker Toolbox\start.sh'"
                 //	bat 'mvnw dockerfile:build'
                 //	bat 'mvn dockerfile:push'
             }
