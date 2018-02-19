@@ -36,10 +36,10 @@ pipeline {
 			}
         }
         stage('Deploy') {
-        	def app
+        	
             steps {
                 echo 'Deploying....'
-               app= docker.build("siddhirajpantoji/testrest")
+               docker.build("siddhirajpantoji/testrest")
                 //	bat 'mvnw dockerfile:build'
                 //	bat 'mvn dockerfile:push'
             }
