@@ -36,9 +36,10 @@ pipeline {
 			}
         }
         stage('Deploy') {
+        	def app
             steps {
                 echo 'Deploying....'
-                bat "'C:\Program Files\Git\bin\bash.exe' --login -i 'C:\Program Files\Docker Toolbox\start.sh'"
+               app= docker.build("siddhirajpantoji/testrest")
                 //	bat 'mvnw dockerfile:build'
                 //	bat 'mvn dockerfile:push'
             }
