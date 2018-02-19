@@ -38,8 +38,11 @@ pipeline {
         stage('Deploy') {
         	
             steps {
-                echo 'Deploying....'
-               docker.build("siddhirajpantoji/testrest")
+                echo 'Building Docker Image '
+                script{
+                	docker.build("siddhirajpantoji/testrest")
+                }
+              // docker.build("siddhirajpantoji/testrest")
                 //	bat 'mvnw dockerfile:build'
                 //	bat 'mvn dockerfile:push'
             }
