@@ -39,19 +39,19 @@ pipeline {
         }
         stage('Deploy') {
         	
-        	agent {
-                docker { image 'maven:3-jdk-8-alpine' }
-            }
-            steps {
-                sh 'mvn --version'
-            }
-           // steps {
-            //    echo 'Building Docker Image '
-               // script{
-               // 	bat 'mkdir tmp'
-               // 	docker.build("siddhirajpantoji/testrest")
-                //}
+        	//agent {
+           //     docker { image 'maven:3-jdk-8-alpine' }
           //  }
+           // steps {
+                sh 'mvn --version'
+            //}
+            steps {
+                echo 'Building Docker Image '
+                script{
+               // 	bat 'mkdir tmp'
+                	docker.build("siddhirajpantoji/testrest")
+                }
+			 }
         }
     }
 }
