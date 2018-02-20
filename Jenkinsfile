@@ -43,7 +43,7 @@ pipeline {
            //     docker { image 'maven:3-jdk-8-alpine' }
           //  }
            // steps {
-                sh 'mvn --version'
+            //    sh 'mvn --version'
             //}
             steps {
                 echo 'Building Docker Image '
