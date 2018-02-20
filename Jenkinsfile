@@ -5,18 +5,18 @@ pipeline {
         stage('Build') {
             steps {
               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/siddhirajpantoji/JavaPOC.git']]])
-               bat 'mvn clean  package -DskipTests'
+               sh 'mvn clean  package -DskipTests'
             }
         }
         stage('Test') {
             steps {
-          	  bat 'mvn clean  verify '
+          	  sh 'mvn clean  verify '
             }
         }
         stage('CodeCheck') {
             steps {
             		withSonarQubeEnv('SonarQube') {
-						bat 'mvn sonar:sonar'
+						sh 'mvn sonar:sonar'
 						
 					   }
 		    	     script {
@@ -42,7 +42,7 @@ pipeline {
                 docker { image 'maven:3-jdk-8-alpine' }
             }
             steps {
-                bat 'mvn --version'
+                sh 'mvn --version'
             }
            // steps {
             //    echo 'Building Docker Image '
