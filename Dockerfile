@@ -1,9 +1,9 @@
 #Installing jdk 8 and maven 3 with alpine as base image
 #FROM maven:3-jdk-8-alpine
 FROM openjdk:8-jdk-alpine
-# Installing maven 3.0.5 for Http Security issues 
-RUN apk add --no-cache curl tar bash
+#RUN apk add  curl tar bash
 
+# Installing maven 3.0.5 for Http Security issues
 ARG MAVEN_VERSION=3.0.5
 ARG USER_HOME_DIR="/root"
 ARG SHA=707b1f6e390a65bde4af4cdaf2a24d45fc19a6ded00fff02e91626e3e42ceaff
