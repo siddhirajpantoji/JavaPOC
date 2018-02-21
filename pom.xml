@@ -256,20 +256,20 @@
 	</build>
 
 
-<!-- 	<repositories> -->
-<!-- 		<repository> -->
-<!-- 			<id>spring-releases</id> -->
-<!-- 			<url>https://repo.spring.io/libs-release</url> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>maven</id> -->
-<!-- 			<url>https://mvnrepository.com/artifact</url> -->
-<!-- 		</repository> -->
-<!-- 	</repositories> -->
-<!-- 	<pluginRepositories> -->
-<!-- 		<pluginRepository> -->
-<!-- 			<id>spring-releases</id> -->
-<!-- 			<url>https://repo.spring.io/libs-release</url> -->
-<!-- 		</pluginRepository> -->
-<!-- 	</pluginRepositories> -->
+	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>http://repo.spring.io/libs-release</url>
+		</repository>
+		<repository>
+			<id>maven</id>
+			<url>http://mvnrepository.com/artifact</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>http://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
