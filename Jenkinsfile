@@ -49,6 +49,7 @@ pipeline {
                 echo 'Building Docker Image '
                 script{
                // 	bat 'mkdir tmp'
+               		sh 'whoami'
                 	docker.build("siddhirajpantoji/testrest")
                 }
 			 }
