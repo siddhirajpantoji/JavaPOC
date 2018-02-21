@@ -51,7 +51,7 @@ pipeline {
                  	def app
                // 	bat 'mkdir tmp'
                		sh 'whoami'
-                	app = docker.build("JavaPOC")
+                	app = docker.build("javapoc")
                 	 docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
           				  app.push("${env.BUILD_NUMBER}")
             				app.push("latest")
