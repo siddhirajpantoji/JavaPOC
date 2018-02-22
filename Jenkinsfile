@@ -50,9 +50,10 @@ pipeline {
                 	 docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
           				 app.push("${env.BUILD_NUMBER}")
           				  app.push("latest")
+          				  app.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
         			}
-        			sh 'docker run -d -p 8082:8082 siddhirajpantoji/javapoc'
-        			//app.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
+        			//sh 'docker run -d -p 8082:8082 siddhirajpantoji/javapoc'
+        			
                 }
 			 }
         }
