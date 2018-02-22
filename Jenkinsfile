@@ -51,6 +51,7 @@ pipeline {
           				 app.push("${env.BUILD_NUMBER}")
           				  app.push("latest")
         			}
+        			docker.Image.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
                 }
 			 }
         }

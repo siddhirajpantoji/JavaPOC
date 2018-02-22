@@ -25,7 +25,7 @@ WORKDIR /codesource
 RUN mvn clean verify  package 
 
 # Exposing port from which the APIs will be exposed 
-EXPOSE 8080
+EXPOSE 8082
 
 # Specifies the startup command for running docker 
 ENTRYPOINT ["java","-jar","./target/JAVAPOC-0.1.0.jar"]
