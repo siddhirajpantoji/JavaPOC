@@ -56,7 +56,7 @@ pipeline {
         			//sh 'docker run -d -p 8082:8082 siddhirajpantoji/javapoc'
         			
                 }
-                docker.Image.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
+                env.docker.Image.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
 			 }
         }
     }
