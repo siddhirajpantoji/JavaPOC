@@ -51,12 +51,10 @@ pipeline {
           				 app.push("${env.BUILD_NUMBER}")
           				  app.push("latest")
           				 // app.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
-        			}
-        			
-        			//sh 'docker run -d -p 8082:8082 siddhirajpantoji/javapoc'
-        			
+        			}	
+        			sh 'docker run -d -p 8082:8082 siddhirajpantoji/javapoc'
                 }
-                env.docker.Image.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
+                //env.docker.Image.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
 			 }
         }
     }
