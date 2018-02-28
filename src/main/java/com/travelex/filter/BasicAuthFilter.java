@@ -13,7 +13,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 
@@ -26,7 +27,7 @@ public class BasicAuthFilter implements Filter {
 
 	private Map<String, String> authCred;
 
-	private static final Logger LOGGER = Logger.getLogger(BasicAuthFilter.class);
+	private static final Logger LOGGER = LogManager.getLogger(BasicAuthFilter.class);
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {

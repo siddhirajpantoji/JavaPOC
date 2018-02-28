@@ -17,4 +17,6 @@ public class RESTEndPointMapper {
 	public static final String LOGIN= "/login"; // ConsumerController
 	
 	public static final String CARD_DETAILS = "/cardDetails";
+	
+	public static final String PRINT_LOGGER = "/printLogger";
 }

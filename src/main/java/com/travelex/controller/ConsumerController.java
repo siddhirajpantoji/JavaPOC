@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Consumer Controller", description = "Login and Create of Consumer  ")
 public class ConsumerController {
 
-	private static final Logger LOGGER = Logger.getLogger(ConsumerController.class);
+	private static final Logger LOGGER = LogManager.getLogger(ConsumerController.class);
 
 	@Autowired
 	private ConsumerRepository consumerRepository;
@@ -75,6 +76,17 @@ public class ConsumerController {
 		List<Card> cards = cardRepository.findByConsumer(consumers.get(0).getUserId());
 
 		return new ResponseEntity<ConsumerResponse>(new ConsumerResponse(consumers.get(0), cards), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Checks Login for Each User  ", response = BaseResponse.class)
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json", value = RESTEndPointMapper.PRINT_LOGGER)
+	public ResponseEntity<BaseResponse> printLogs() {
+		LOGGER.debug("This is Debug");
+		LOGGER.info("This is Info ");
+		LOGGER.warn("This is Warning ");
+		LOGGER.error("This is Error ");
+		LOGGER.fatal("This is Fatal ");
+		return new ResponseEntity<BaseResponse>(new BaseResponse(HttpStatus.OK, MessageConstants.EVERYTHING_LOOKS_GOOD), HttpStatus.OK);
 	}
 
 }

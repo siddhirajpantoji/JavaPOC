@@ -1,6 +1,7 @@
 package com.travelex;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import cucumber.api.java.en.When;
 //@ContextConfiguration(classes=TestrestApplication.class)
 public class CucumberTests {
 
-	private static final Logger LOGGER = Logger.getLogger(CucumberTests.class);
+	private static final Logger LOGGER = LogManager.getLogger(CucumberTests.class);
 
 	private ResponseEntity<BaseResponse> registrationResponse = null;
 	private ResponseEntity<ConsumerResponse> loginResponse = null;

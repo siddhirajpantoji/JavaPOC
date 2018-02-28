@@ -7,7 +7,8 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -26,7 +27,7 @@ import com.travelex.response.ValidationResponse;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	private static final Logger LOGGER = Logger.getLogger(GlobalExceptionHandler.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(GlobalExceptionHandler.class.getName());
 	
 	@ExceptionHandler(AuthException.class)
 	public  BaseResponse handleAuthResponse(AuthException exception)
