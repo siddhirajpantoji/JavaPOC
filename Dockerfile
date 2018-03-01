@@ -19,7 +19,7 @@ COPY . ./codesource/
 WORKDIR /codesource
 
 # Installing Dependencies of Maven 
-#RUN mvn install 
+#RUN mvn install -DskipTests
 
 # Generating package with dependencies  
 RUN mvn clean verify  package 
