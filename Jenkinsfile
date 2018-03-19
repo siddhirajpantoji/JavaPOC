@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-              checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/siddhirajpantoji/JavaPOC.git']]])
+              checkout([$class: 'GitSCM', branches: [[name: '*/logs_only']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/siddhirajpantoji/JavaPOC.git']]])
                //  bat 'mvn clean  package -DskipTests' //For Windows
                // Compilation of code  
                sh 'mvn clean  package -DskipTests'
@@ -54,7 +54,7 @@ pipeline {
           				  app.push("latest")
           				 // app.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
         			}	
-        			sh './dockerstart.sh'
+        			// sh './dockerstart.sh'
                 }
                 //env.docker.Image.run("-d","-p 8082:8082","siddhirajpantoji/javapoc")
 			 }
