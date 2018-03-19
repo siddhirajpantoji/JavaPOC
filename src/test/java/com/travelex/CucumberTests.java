@@ -1,5 +1,8 @@
 package com.travelex;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +22,28 @@ import cucumber.api.java.en.When;
 //@ContextConfiguration(classes=TestrestApplication.class)
 public class CucumberTests {
 
+	public List<String> a = Arrays.asList(new String[] {"",""});
 	private static final Logger LOGGER = LogManager.getLogger(CucumberTests.class);
 
 	private ResponseEntity<BaseResponse> registrationResponse = null;
 	private ResponseEntity<ConsumerResponse> loginResponse = null;
+
 	private static final String BASE_PATH = "http://localhost:8082/";
 	@Autowired
 	protected TestRestTemplate restTemplate;
 
-
 	@When("^User Registers for First Time$")
 	public void user_Registers_for_First_Time() throws Throwable {
-	    // TODO Call for Registration API 
+		// TODO Call for Registration API
 		LOGGER.info("Into user_Registers_for_First_Time ");
 		ConsumerRequest consumerRequest = new ConsumerRequest();
 		consumerRequest.setEmail("siddhirajpantoji1@gmail.com");
 		consumerRequest.setPassword("Sidd@123");
 		consumerRequest.setFirstName("Siddhiraj ");
 		consumerRequest.setLastName("Pantoji");
-		RestTemplate restTemplate = new RestTemplate();		
-		registrationResponse= restTemplate.postForEntity(BASE_PATH+"/registration", consumerRequest, BaseResponse.class);
+		RestTemplate restTemplate = new RestTemplate();
+		registrationResponse = restTemplate.postForEntity(BASE_PATH + "/registration", consumerRequest,
+				BaseResponse.class);
 		LOGGER.info("Exit user_Registers_for_First_Time ");
 	}
 
@@ -46,18 +51,21 @@ public class CucumberTests {
 	public void logs_in_with_the_same_Email_Id() throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
 		LOGGER.info("Into logs_in_with_the_same_Email_Id ");
-		LoginRequest loginRequest=  new LoginRequest();
+		LoginRequest loginRequest = new LoginRequest();
 		loginRequest.setEmailId("siddhirajpantoji1@gmail.com");
 		loginRequest.setPassword("Sidd@123");
-		RestTemplate restTemplate = new RestTemplate();		
-		loginResponse= restTemplate.postForEntity(BASE_PATH+"/login", loginRequest, ConsumerResponse.class);
+		RestTemplate restTemplate = new RestTemplate();
+		loginResponse = restTemplate.postForEntity(BASE_PATH + "/login", loginRequest, ConsumerResponse.class);
 		LOGGER.info("Exit logs_in_with_the_same_Email_Id ");
 	}
 
 	@Then("^Gets Card Details with the user Id$")
 	public void gets_Card_Details_with_the_user_Id() throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+//		LOGGER.info("Into Gets Card Details with the user Id ");
+//		loginResponse = restTemplate.getForEntity(BASE_PATH + "/cardDetails?userId="+loginResponse.getBody().getConsumerId(),  ConsumerResponse.class);
+//		LOGGER.info("Into Gets Card Details with the user Id ");
+		
 	}
 
 	@Then("^Adds Card Details with user Id$")
@@ -71,4 +79,15 @@ public class CucumberTests {
 		// Write code here that turns the phrase above into concrete actions
 		throw new PendingException();
 	}
+
+	@Then("^Triggerloggers$")
+	public void triggerloggers() throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		LOGGER.info("Into Triggerloggers ");
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getForEntity(BASE_PATH + "/login", BaseResponse.class);
+		
+		
+	}
+
 }

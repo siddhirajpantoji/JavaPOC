@@ -1,5 +1,7 @@
 package com.travelex;
 
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -11,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
 
 import com.travelex.filter.BasicAuthFilter;
+import com.travelex.utils.TestEnum;
 
 //@ComponentScan(basePackages= {"com.example.testrest.testrest.config","com.example.testrest.testrest.entity"})
 @ComponentScan(basePackageClasses = TravelexTestApplication.class)
@@ -21,7 +24,15 @@ import com.travelex.filter.BasicAuthFilter;
 public class TravelexTestApplication {
 
 	public static void main(String[] args) {
+		TestEnum s= TestEnum.PROP_NAME;
+		for(TestEnum a:s.values())
+		{
+			List<String> b=a.getB();
+			
+			System.out.println(b);
+		}
 		SpringApplication.run(TravelexTestApplication.class, args);
+		
 	}
 
 	@Bean

@@ -11,5 +11,8 @@ Feature: User and His Card Save
     Then Gets Card Details with the user Id
     Then Adds Card Details with user Id
     Then Gets Card Details with the user Id 
+    Then Triggerloggers
     And updates card Details 
+   
+    
   

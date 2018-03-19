@@ -18,6 +18,8 @@ RUN java -version
 COPY . ./codesource/
 WORKDIR /codesource
 
+
+RUN whoami
 # Installing Dependencies of Maven 
 #RUN mvn install -DskipTests
 

@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-alpine
 
 RUN apk add --no-cache curl tar bash
 
-ARG MAVEN_VERSION=3.0.5
+ARG MAVEN_VERSION=3.0.5	
 ARG USER_HOME_DIR="/root"
 ARG SHA=aecc0d3d67732939c0056d4a0d8510483ee1167e
 ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
